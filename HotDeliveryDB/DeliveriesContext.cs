@@ -21,10 +21,10 @@ namespace HotDeliveryDB
                 .ForSqliteHasDefaultValue("Available");
             builder.Entity<Delivery>()
                 .Property(b => b.CreationTime)
-                .ForSqliteHasDefaultValueSql("DEFAULT DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')");
+                .ForSqliteHasDefaultValueSql("DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')");
             builder.Entity<Delivery>()
                 .Property(b => b.ModificationTime)
-                .ForSqliteHasDefaultValueSql("DEFAULT DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')");
+                .ForSqliteHasDefaultValueSql("DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')");
             base.OnModelCreating(builder);
         }
 
