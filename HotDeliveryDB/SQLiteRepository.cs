@@ -35,20 +35,22 @@ namespace HotDeliveryDB
 
         public Delivery GetDelivery(int id)
         {
-
-            var item = (from delivery in Context.Deliveries
-                        where delivery.Id == id
-                        select new Delivery
-                        {
-                            Status = delivery.Status,
-                            Title = delivery.Title,
-                            UserId = delivery.UserId,
-                            CreationTime = delivery.CreationTime,
-                            ModificationTime = delivery.ModificationTime,
-                            ExpirationTime = delivery.ExpirationTime
-                        }).FirstOrDefault();
-            return item;
-
+            using (DeliveriesContext context = new DeliveriesContext(_ConnectionString))
+            {
+                var item = (from delivery in context.Deliveries
+                            where delivery.Id == id
+                            select new Delivery
+                            {
+                                Id = delivery.Id,
+                                Status = delivery.Status,
+                                Title = delivery.Title,
+                                UserId = delivery.UserId,
+                                CreationTime = delivery.CreationTime,
+                                ModificationTime = delivery.ModificationTime,
+                                ExpirationTime = delivery.ExpirationTime
+                            }).FirstOrDefault();
+                return item;
+            }
         }
 
         public void Create(Delivery item)
