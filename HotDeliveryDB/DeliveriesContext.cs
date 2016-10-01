@@ -6,11 +6,11 @@ namespace HotDeliveryDB
     public class DeliveriesContext : DbContext
     {
         public DbSet<Delivery> Deliveries { get; set; }
-        private string ConnectionString { get; set; }
+        private string _ConnectionString { get; set; }
 
         public DeliveriesContext(string connectionString)
         {
-            ConnectionString = connectionString;
+            _ConnectionString = connectionString;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -30,7 +30,7 @@ namespace HotDeliveryDB
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ConnectionString };
+            var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = _ConnectionString };
             var connectionString = connectionStringBuilder.ToString();
             var connection = new SqliteConnection(connectionString);
 

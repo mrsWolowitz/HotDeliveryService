@@ -52,7 +52,7 @@ namespace SchedulerTasks
         {
             List<Delivery> deliveries = Db.GetDeliveryList();
             var subset =
-                deliveries.Where(i => i.Status == "Available" && i.CreationTime.AddSeconds(i.ExpirationTime) < DateTime.Now);
+                deliveries.Where(i => i.Status == "Available" && i.ExpirationTime < DateTime.Now);
             foreach (Delivery delivery in subset)
             {
                 if (cancellationToken.IsCancellationRequested)
@@ -74,7 +74,9 @@ namespace SchedulerTasks
             for (int i = 0; i < k; i++)
             {
                 Delivery item = _CreateNewDelivery();
-                Db.Create(item);
+                Delivery itemDB = Db.Create(item);
+                itemDB.ExpirationTime = itemDB.CreationTime.AddSeconds(AppSettings.ExpirationTime);
+                Db.Update(itemDB);
             }
         }
 
@@ -86,7 +88,6 @@ namespace SchedulerTasks
             int title = random.Next();
             delivery.Title = title.ToString();
             delivery.UserId = null;
-            delivery.ExpirationTime = AppSettings.ExpirationTime;
             return delivery;
         }
 

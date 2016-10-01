@@ -10,7 +10,7 @@ namespace HotDeliveryDB
     {
         List<Delivery> GetDeliveryList();
         Delivery GetDelivery(int id);
-        void Create(Delivery item);
+        Delivery Create(Delivery item);
         void Update(Delivery item);
         void Delete(int id);
     }

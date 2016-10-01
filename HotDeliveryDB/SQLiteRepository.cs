@@ -53,13 +53,14 @@ namespace HotDeliveryDB
             }
         }
 
-        public void Create(Delivery item)
+        public Delivery Create(Delivery item)
         {
             using (DeliveriesContext context = new DeliveriesContext(_ConnectionString))
             {
                 context.Deliveries.Add(item);
                 context.SaveChanges();
             }
+            return item;
         }
 
         public void Update(Delivery item)

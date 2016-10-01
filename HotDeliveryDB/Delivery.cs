@@ -14,6 +14,6 @@ namespace HotDeliveryDB
         public int? UserId { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime ModificationTime { get; set; }
-        public int ExpirationTime { get; set; }
+        public DateTime ExpirationTime { get; set; }
     }
 }

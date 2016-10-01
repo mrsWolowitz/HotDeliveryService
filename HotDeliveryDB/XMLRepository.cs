@@ -36,7 +36,7 @@ namespace HotDeliveryDB
                             UserId = _ParseNullableInt(xe.Element("UserId").Value),
                             CreationTime = DateTime.Parse(xe.Element("CreationTime").Value),
                             ModificationTime = DateTime.Parse(xe.Element("ModificationTime").Value),
-                            ExpirationTime = Int32.Parse(xe.Element("ExpirationTime").Value)
+                            ExpirationTime = DateTime.Parse(xe.Element("ExpirationTime").Value)
                         };
 
             return items.ToList();
@@ -54,12 +54,12 @@ namespace HotDeliveryDB
                             UserId = _ParseNullableInt(xe.Element("UserId").Value),
                             CreationTime = DateTime.Parse(xe.Element("CreationTime").Value),
                             ModificationTime = DateTime.Parse(xe.Element("ModificationTime").Value),
-                            ExpirationTime = Int32.Parse(xe.Element("ExpirationTime").Value)
+                            ExpirationTime = DateTime.Parse(xe.Element("ExpirationTime").Value)
                         };
             return items.FirstOrDefault();
         }
 
-        public void Create(Delivery item)
+        public Delivery Create(Delivery item)
         {
             XElement root = _Database.Element("Deliveries");
             int maxId;
@@ -69,12 +69,11 @@ namespace HotDeliveryDB
             }
 
             else
-
                 maxId = -1;
-
+            item.Id = ++maxId;
             DateTime currentTime = DateTime.Now;
             XElement delivery = new XElement("Delivery",
-                new XAttribute("Id", ++maxId),
+                new XAttribute("Id", item.Id),
                 new XElement("Status", item.Status),
                 new XElement("Title", item.Title),
                 new XElement("UserId", item.UserId),
@@ -87,6 +86,7 @@ namespace HotDeliveryDB
             //    _Database.Save(stream);
             //}
             _Database.Save(_ConnectionString);
+            return item;
         }
 
         public void Update(Delivery item)
