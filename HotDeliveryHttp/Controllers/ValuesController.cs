@@ -7,7 +7,7 @@ using System.Web.Http;
 using HotDeliveryDB;
 using System.Configuration;
 
-namespace HotDeliveryHttp.Controllers 
+namespace HotDeliveryHttp.Controllers
 {
     public class ValuesController : ApiController
     {
@@ -36,21 +36,40 @@ namespace HotDeliveryHttp.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<Delivery> GetAvailableDeliveries()
+        public IHttpActionResult GetAvailableDeliveries()
         {
-            List<Delivery> deliveries = db.GetDeliveryList();
-            var subset = deliveries.Where(i => i.Status == "Available");
-            return subset;
+            try
+            {
+                List<Delivery> deliveries = db.GetDeliveryList();
+                var subset = deliveries.Where(i => i.Status == "Available");
+                return Ok(subset);
+            }
+            catch (Exception)
+            {
+                return Content(HttpStatusCode.InternalServerError, "InternalServerError");
+            }
         }
 
         // PUT api/values/5
-        public void TakeDelivery(int deliveryId, [FromBody]int userId)
+        [HttpPut]
+        public IHttpActionResult TakeDelivery(int deliveryId, [FromBody]int userId)
         {
-            Delivery delivery = db.GetDelivery(deliveryId);
-            delivery.UserId = userId;
-            delivery.Status = "Taken";
-            db.Update(delivery);
+            try
+            {
+                Delivery delivery = db.GetDelivery(deliveryId);
+                if (delivery == null)
+                    return Content(HttpStatusCode.NotFound, "Доставка не найдена");
+                if (delivery.Status != "Available")
+                    return Content((HttpStatusCode)422, "Статус доставки не Available");
+                delivery.UserId = userId;
+                delivery.Status = "Taken";
+                db.Update(delivery);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return Content(HttpStatusCode.InternalServerError, "InternalServerError");
+            }
         }
-
     }
 }
