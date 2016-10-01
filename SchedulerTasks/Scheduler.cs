@@ -12,7 +12,7 @@ namespace SchedulerTasks
     public class Scheduler
     {
         public AppSettings AppSettings { get; set; }
-        public IRepository Db { get; set; }
+        private IRepository Db { get; set; }
         public Scheduler()
         {
             AppSettings = _GetAppSetting();
@@ -23,6 +23,11 @@ namespace SchedulerTasks
                 Db = new SQLiteRepository(AppSettings.ConnectionStrings.Path);
 
             }
+        }
+
+        public Scheduler(IRepository repository)
+        {
+            Db = repository;
         }
 
         public Task CreateDeliveries(CancellationToken cancellationToken)

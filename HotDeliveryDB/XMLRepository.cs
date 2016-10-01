@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,14 +16,15 @@ namespace HotDeliveryDB
         public XmlRepository(string connectionString)
         {
             _ConnectionString = connectionString;
-            _Database = new XDocument();
-            XElement deliveries = new XElement("Deliveries");
-            _Database.Add(deliveries);
-            //using (var stream = File.OpenWrite(_ConnectionString))
-            //{
-            //    _Database.Save(stream);
-            //}
-            _Database.Save(_ConnectionString);
+            if(File.Exists(connectionString))
+            _Database = XDocument.Load(connectionString);
+            else {
+                _Database = new XDocument();
+                XElement deliveries = new XElement("Deliveries");
+                _Database.Add(deliveries);
+                _Database.Save(_ConnectionString);
+            }
+          
         }
 
         public List<Delivery> GetDeliveryList()
@@ -72,13 +74,15 @@ namespace HotDeliveryDB
                 maxId = -1;
             item.Id = ++maxId;
             DateTime currentTime = DateTime.Now;
+            item.CreationTime = currentTime;
+            item.ModificationTime = currentTime;
             XElement delivery = new XElement("Delivery",
                 new XAttribute("Id", item.Id),
                 new XElement("Status", item.Status),
                 new XElement("Title", item.Title),
                 new XElement("UserId", item.UserId),
-                new XElement("CreationTime", currentTime.ToString()),
-                new XElement("ModificationTime", currentTime.ToString()),
+                new XElement("CreationTime", item.CreationTime.ToString()),
+                new XElement("ModificationTime", item.ModificationTime.ToString()),
                 new XElement("ExpirationTime", item.ExpirationTime));
             root.Add(delivery);
             //using (var stream = File.OpenWrite(_ConnectionString))

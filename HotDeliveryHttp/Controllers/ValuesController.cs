@@ -20,18 +20,17 @@ namespace HotDeliveryHttp.Controllers
             settings.ConnectionStrings.DBFormat = ConfigurationManager.AppSettings["DBFormat"];
             settings.ConnectionStrings.Path = ConfigurationManager.ConnectionStrings[settings.ConnectionStrings.DBFormat].ConnectionString;
 
-            settings.DeliveriesCountMin = Int32.Parse(ConfigurationManager.AppSettings["DeliveriesCountMin"]);
-            settings.DeliveriesCountMax = Int32.Parse(ConfigurationManager.AppSettings["DeliveriesCountMax"]);
-            settings.TaskIntervalMin = Int32.Parse(ConfigurationManager.AppSettings["TaskIntervalMin"]);
-            settings.TaskIntervalMax = Int32.Parse(ConfigurationManager.AppSettings["TaskIntervalMax"]);
-            settings.ExpirationTime = Int32.Parse(ConfigurationManager.AppSettings["ExpirationTime"]);
-
             if (settings.ConnectionStrings.DBFormat == "XMLFile")
                 db = new XmlRepository(settings.ConnectionStrings.Path);
             else if (settings.ConnectionStrings.DBFormat == "SQLite")
             {
                 db = new SQLiteRepository(settings.ConnectionStrings.Path);
             }
+        }
+
+        public ValuesController(IRepository repository)
+        {
+            db = repository;
         }
 
         // GET api/values
@@ -50,9 +49,10 @@ namespace HotDeliveryHttp.Controllers
             }
         }
 
-        // PUT api/values/5
+        // PUT api/values/5/55
         [HttpPut]
-        public IHttpActionResult TakeDelivery(int deliveryId, [FromBody]int userId)
+        [Route("api/{controller}/{deliveryId:int}/{userId:int}")]
+        public IHttpActionResult TakeDelivery(int deliveryId, int userId)
         {
             try
             {
