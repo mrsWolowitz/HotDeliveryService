@@ -51,7 +51,7 @@ namespace HotDeliveryHttp.Controllers
 
         // PUT api/values/5/55
         [HttpPut]
-        [Route("api/{controller}/{deliveryId:int}/{userId:int}")]
+        [Route("api/values/{deliveryId:int}/{userId:int}")]
         public IHttpActionResult TakeDelivery(int deliveryId, int userId)
         {
             try

@@ -25,9 +25,10 @@ namespace SchedulerTasks
             }
         }
 
-        public Scheduler(IRepository repository)
+        public Scheduler(IRepository repository, AppSettings settings)
         {
             Db = repository;
+            AppSettings = settings;
         }
 
         public Task CreateDeliveries(CancellationToken cancellationToken)
