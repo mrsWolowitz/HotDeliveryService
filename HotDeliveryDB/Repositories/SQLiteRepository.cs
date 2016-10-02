@@ -13,11 +13,7 @@ namespace HotDeliveryDB
 
         public SQLiteRepository(string connectionString)
         {
-            _ConnectionString = connectionString;
-            //using (DeliveriesContext context = new DeliveriesContext(_ConnectionString))
-            //{
-            //    context.Database.EnsureCreated();
-            //}
+            _ConnectionString = connectionString;            
             this._Context = new DeliveriesContext(_ConnectionString);
             _Context.Database.EnsureCreated();
         }
@@ -25,12 +21,6 @@ namespace HotDeliveryDB
 
         public List<Delivery> GetDeliveryList()
         {
-            //using (DeliveriesContext context = new DeliveriesContext(_ConnectionString))
-            //{
-            //var subset = context.Deliveries;
-            //List<Delivery> deliveries = context.Deliveries.ToList();
-            //return deliveries;
-            //}
             var subset = _Context.Deliveries;
             List<Delivery> deliveries = _Context.Deliveries.ToList();
             return deliveries;
@@ -39,23 +29,6 @@ namespace HotDeliveryDB
 
         public Delivery GetDelivery(int id)
         {
-            //using (DeliveriesContext context = new DeliveriesContext(_ConnectionString))
-            //{
-            //    var item = (from delivery in context.Deliveries
-            //                where delivery.Id == id
-            //                select new Delivery
-            //                {
-            //                    Id = delivery.Id,
-            //                    Status = delivery.Status,
-            //                    Title = delivery.Title,
-            //                    UserId = delivery.UserId,
-            //                    CreationTime = delivery.CreationTime,
-            //                    ModificationTime = delivery.ModificationTime,
-            //                    ExpirationTime = delivery.ExpirationTime
-            //                }).FirstOrDefault();
-            //    return item;
-            //}
-
             var item = (from delivery in _Context.Deliveries
                         where delivery.Id == id
                         select new Delivery
@@ -73,11 +46,6 @@ namespace HotDeliveryDB
 
         public Delivery Create(Delivery item)
         {
-            //using (DeliveriesContext context = new DeliveriesContext(_ConnectionString))
-            //{
-            //    context.Deliveries.Add(item);
-            //    context.SaveChanges();
-            //}
             _Context.Deliveries.Add(item);
             _Context.SaveChanges();
             return item;
@@ -85,12 +53,6 @@ namespace HotDeliveryDB
 
         public void Update(Delivery item)
         {
-
-            //using (DeliveriesContext context = new DeliveriesContext(_ConnectionString))
-            //{
-            //    context.Deliveries.Update(item);
-            //    context.SaveChanges();
-            //}
             _Context.Deliveries.Update(item);
             _Context.SaveChanges();
         }
