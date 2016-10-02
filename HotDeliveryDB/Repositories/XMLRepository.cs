@@ -121,11 +121,19 @@ namespace HotDeliveryDB
             throw new System.NotImplementedException();
         }
 
+        public void Dispose()
+        {
+            //throw new NotImplementedException();
+        }
+
+        #region Utils
         private int? _ParseNullableInt(string val)
         {
             int i;
             return int.TryParse(val, out i) ? (int?)i : null;
         }
+
+        #endregion
 
     }
 }

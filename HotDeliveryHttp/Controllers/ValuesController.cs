@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using HotDeliveryDB;
+using HotDeliveryDB.Types;
 using System.Configuration;
 
 namespace HotDeliveryHttp.Controllers
@@ -40,7 +41,7 @@ namespace HotDeliveryHttp.Controllers
             try
             {
                 List<Delivery> deliveries = db.GetDeliveryList();
-                var subset = deliveries.Where(i => i.Status == "Available");
+                var subset = deliveries.Where(i => i.Status == Enum.GetName(typeof(Status), Status.Available));
                 return Ok(subset);
             }
             catch (Exception)
@@ -59,10 +60,10 @@ namespace HotDeliveryHttp.Controllers
                 Delivery delivery = db.GetDelivery(deliveryId);
                 if (delivery == null)
                     return Content(HttpStatusCode.NotFound, "Доставка не найдена");
-                if (delivery.Status != "Available")
+                if (delivery.Status != Enum.GetName(typeof(Status), Status.Available))
                     return Content((HttpStatusCode)422, "Статус доставки не Available");
                 delivery.UserId = userId;
-                delivery.Status = "Taken";
+                delivery.Status = Enum.GetName(typeof(Status), Status.Taken);
                 db.Update(delivery);
                 return Ok();
             }

@@ -7,6 +7,7 @@ using System.Linq;
 using SchedulerTasks;
 using System.Threading;
 using System.Threading.Tasks;
+using HotDeliveryDB.Types;
 
 namespace ShedulerTasks.Test
 {
@@ -23,6 +24,7 @@ namespace ShedulerTasks.Test
             _MockRepository = _CreateMockRepository();
         }
 
+        #region ClassInitialize
         private static IRepository _CreateMockRepository()
         {
             DateTime dateTime = DateTime.Now.AddHours(-1);
@@ -30,14 +32,14 @@ namespace ShedulerTasks.Test
         new Delivery {
             Id =1,
             CreationTime = dateTime,
-            Status = "Expired",
+            Status = Enum.GetName(typeof(Status), Status.Expired),
             Title = "1111111",
             ModificationTime = dateTime.AddSeconds(_Settings.ExpirationTime + 30),
             ExpirationTime = dateTime.AddSeconds(_Settings.ExpirationTime) },
         new Delivery {
             Id =2,
             CreationTime = dateTime,
-            Status = "Available",
+            Status = Enum.GetName(typeof(Status), Status.Available),
             Title = "2222222",
             ModificationTime = dateTime,
             ExpirationTime = dateTime.AddSeconds(_Settings.ExpirationTime)},
@@ -79,7 +81,8 @@ namespace ShedulerTasks.Test
             settings.ExpirationTime = 5;
 
             return settings;
-        }
+        } 
+        #endregion
 
         [TestMethod]
         public void CreateDeliveries_DeliveriesCountIncrease()
@@ -92,11 +95,11 @@ namespace ShedulerTasks.Test
             Scheduler scheduler = new Scheduler(_MockRepository, _Settings);
 
             //Act
-            using (CancellationTokenSource _Cts1 = new CancellationTokenSource())
+            using (CancellationTokenSource _Cts = new CancellationTokenSource())
             {
-                scheduler.CreateDeliveries(_Cts1.Token);
+                scheduler.CreateDeliveries(_Cts.Token);
                 Thread.Sleep(900);
-                _Cts1.Cancel();
+                _Cts.Cancel();
             }
             int countAfterCreating = _MockRepository.GetDeliveryList().Count();
 
@@ -107,10 +110,10 @@ namespace ShedulerTasks.Test
         }
 
         [TestMethod]
-        public void ExpireDeliveries()
+        public void ExpireDeliveries_SetStatusExpired()
         {
             //Arrange
-            string expectedStatus = "Expired";
+            string expectedStatus = Enum.GetName(typeof(Status), Status.Expired);
             Scheduler scheduler = new Scheduler(_MockRepository, _Settings);
 
             //Act

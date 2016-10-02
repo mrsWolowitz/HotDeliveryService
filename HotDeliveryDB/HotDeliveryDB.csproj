@@ -122,13 +122,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppSettings.cs" />
+    <Compile Include="Types\AppSettings.cs" />
     <Compile Include="DeliveriesContext.cs" />
-    <Compile Include="Delivery.cs" />
+    <Compile Include="Types\Delivery.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\SQLiteRepository.cs" />
     <Compile Include="Repositories\XMLRepository.cs" />
+    <Compile Include="Types\Status.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

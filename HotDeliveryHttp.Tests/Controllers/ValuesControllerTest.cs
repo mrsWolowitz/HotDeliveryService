@@ -11,6 +11,7 @@ using HotDeliveryHttp.Controllers;
 using HotDeliveryDB;
 using System.Web.Http.Results;
 using Moq;
+using HotDeliveryDB.Types;
 
 namespace HotDeliveryHttp.Tests.Controllers
 {
@@ -24,14 +25,14 @@ namespace HotDeliveryHttp.Tests.Controllers
         new Delivery {
             Id =1,
             CreationTime = dateTime,
-            Status = "Expired",
+            Status = Enum.GetName(typeof(Status), Status.Expired),
             Title = "1111111",
             ModificationTime = dateTime.AddMinutes(1),
             ExpirationTime = dateTime.AddSeconds(5) },
         new Delivery {
             Id =2,
             CreationTime = dateTime,
-            Status = "Available",
+            Status = Enum.GetName(typeof(Status), Status.Available),
             Title = "2222222",
             ModificationTime = dateTime,
             ExpirationTime = dateTime.AddSeconds(5)},
@@ -42,7 +43,13 @@ namespace HotDeliveryHttp.Tests.Controllers
             mock.Setup(m => m.GetDeliveryList()).Returns(deliveries);
 
             mock.Setup(m => m.Create(It.IsAny<Delivery>()))
-                .Callback<Delivery>(c => deliveries.Add(c));
+                .Returns<Delivery>(c =>
+                {
+                    c.Id = deliveries.Count + 1;
+                    c.CreationTime = dateTime;
+                    deliveries.Add(c);
+                    return c;
+                });
 
             mock.Setup(m => m.GetDelivery(It.IsAny<int>()))
                 .Returns<int>(c => deliveries.Where(q => q.Id == c).FirstOrDefault());
@@ -102,6 +109,22 @@ namespace HotDeliveryHttp.Tests.Controllers
 
             // Assert
             Assert.IsInstanceOfType(actionResult, typeof(OkResult));            
+        }
+
+        [TestMethod]
+        public void TakeDelivery_SetStatusTaken()
+        {
+            // Arrange
+            var mockRepository = _CreateMockRepository();
+            ValuesController controller = new ValuesController(mockRepository);
+            string expectedStatus = Enum.GetName(typeof(Status), Status.Taken);
+            int id = 2;
+
+            // Act
+            IHttpActionResult actionResult = controller.TakeDelivery(id, 55);
+
+            // Assert
+            Assert.AreEqual(expectedStatus, mockRepository.GetDelivery(2).Status);
         }
 
         [TestMethod]

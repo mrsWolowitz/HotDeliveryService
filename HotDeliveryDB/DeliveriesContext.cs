@@ -1,5 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using System;
+using HotDeliveryDB.Types;
 
 namespace HotDeliveryDB
 {
@@ -18,7 +20,7 @@ namespace HotDeliveryDB
             builder.Entity<Delivery>().HasKey(m => m.Id);
             builder.Entity<Delivery>()
                 .Property(b => b.Status)
-                .ForSqliteHasDefaultValue("Available");
+                .ForSqliteHasDefaultValue(Enum.GetName(typeof(Status), Status.Available));
             builder.Entity<Delivery>()
                 .Property(b => b.CreationTime)
                 .ForSqliteHasDefaultValueSql("DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')");
