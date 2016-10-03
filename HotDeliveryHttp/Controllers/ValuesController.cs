@@ -64,6 +64,7 @@ namespace HotDeliveryHttp.Controllers
                     return Content((HttpStatusCode)422, "Статус доставки не Available");
                 delivery.UserId = userId;
                 delivery.Status = Enum.GetName(typeof(Status), Status.Taken);
+                delivery.ModificationTime = DateTime.Now;
                 db.Update(delivery);
                 return Ok();
             }

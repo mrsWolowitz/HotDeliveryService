@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotDeliveryHttp.Tests", "Ho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShedulerTasks.Test", "ShedulerTasks.Test\ShedulerTasks.Test.csproj", "{6422319A-721A-4778-90A5-3C7B9477E5E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientTasks", "TestWindow\ClientTasks.csproj", "{94BED28E-2CF0-474E-85CA-EDFE1BD61A50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{6422319A-721A-4778-90A5-3C7B9477E5E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6422319A-721A-4778-90A5-3C7B9477E5E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6422319A-721A-4778-90A5-3C7B9477E5E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94BED28E-2CF0-474E-85CA-EDFE1BD61A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94BED28E-2CF0-474E-85CA-EDFE1BD61A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94BED28E-2CF0-474E-85CA-EDFE1BD61A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94BED28E-2CF0-474E-85CA-EDFE1BD61A50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

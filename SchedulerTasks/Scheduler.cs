@@ -85,6 +85,7 @@ namespace SchedulerTasks
                 if (cancellationToken.IsCancellationRequested)
                     break;
                 delivery.Status = Enum.GetName(typeof(Status), Status.Expired);
+                delivery.ModificationTime = DateTime.Now;
                 Db.Update(delivery);
             }
         }
