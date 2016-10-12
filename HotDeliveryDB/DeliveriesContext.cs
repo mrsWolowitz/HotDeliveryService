@@ -20,7 +20,7 @@ namespace HotDeliveryDB
             builder.Entity<Delivery>().HasKey(m => m.Id);
             builder.Entity<Delivery>()
                 .Property(b => b.Status)
-                .ForSqliteHasDefaultValue(Enum.GetName(typeof(Status), Status.Available));
+                .ForSqliteHasDefaultValue(Status.Available);
             builder.Entity<Delivery>()
                 .Property(b => b.CreationTime)
                 .ForSqliteHasDefaultValueSql("DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')");

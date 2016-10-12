@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace HotDeliveryDB.Types
 {
-    public enum Status
+    public static class Status
     {
-        Expired,
-        Available,
-        Taken
+        public const string Expired = "Expired";
+        public const string Available = "Available";
+        public const string Taken = "Taken";
     }
 }

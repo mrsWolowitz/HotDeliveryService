@@ -79,12 +79,12 @@ namespace SchedulerTasks
         {
             List<Delivery> deliveries = Db.GetDeliveryList();
             var subset =
-                deliveries.Where(i => i.Status == Enum.GetName(typeof(Status), Status.Available) && i.ExpirationTime < DateTime.Now);
+                deliveries.Where(i => i.Status == Status.Available && i.ExpirationTime < DateTime.Now);
             foreach (Delivery delivery in subset)
             {
                 if (cancellationToken.IsCancellationRequested)
                     break;
-                delivery.Status = Enum.GetName(typeof(Status), Status.Expired);
+                delivery.Status = Status.Expired;
                 delivery.ModificationTime = DateTime.Now;
                 Db.Update(delivery);
             }
@@ -126,7 +126,7 @@ namespace SchedulerTasks
         private Delivery _CreateNewDelivery()
         {
             Delivery delivery = new Delivery();
-            delivery.Status = Enum.GetName(typeof(Status), Status.Available);
+            delivery.Status = Status.Available;
             Random random = new Random();
             int title = random.Next();
             delivery.Title = title.ToString();

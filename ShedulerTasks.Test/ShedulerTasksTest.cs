@@ -32,14 +32,14 @@ namespace ShedulerTasks.Test
         new Delivery {
             Id =1,
             CreationTime = dateTime,
-            Status = Enum.GetName(typeof(Status), Status.Expired),
+            Status = Status.Expired,
             Title = "1111111",
             ModificationTime = dateTime.AddSeconds(_Settings.ExpirationTime + 30),
             ExpirationTime = dateTime.AddSeconds(_Settings.ExpirationTime) },
         new Delivery {
             Id =2,
             CreationTime = dateTime,
-            Status = Enum.GetName(typeof(Status), Status.Available),
+            Status = Status.Available,
             Title = "2222222",
             ModificationTime = dateTime,
             ExpirationTime = dateTime.AddSeconds(_Settings.ExpirationTime)},
@@ -113,7 +113,7 @@ namespace ShedulerTasks.Test
         public void ExpireDeliveries_SetStatusExpired()
         {
             //Arrange
-            string expectedStatus = Enum.GetName(typeof(Status), Status.Expired);
+            string expectedStatus = Status.Expired;
             Scheduler scheduler = new Scheduler(_MockRepository, _Settings);
 
             //Act

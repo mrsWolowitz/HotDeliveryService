@@ -41,7 +41,7 @@ namespace HotDeliveryHttp.Controllers
             try
             {
                 List<Delivery> deliveries = db.GetDeliveryList();
-                var subset = deliveries.Where(i => i.Status == Enum.GetName(typeof(Status), Status.Available));
+                var subset = deliveries.Where(i => i.Status == Status.Available);
                 return Ok(subset);
             }
             catch (Exception)
@@ -60,10 +60,10 @@ namespace HotDeliveryHttp.Controllers
                 Delivery delivery = db.GetDelivery(deliveryId);
                 if (delivery == null)
                     return Content(HttpStatusCode.NotFound, "Доставка не найдена");
-                if (delivery.Status != Enum.GetName(typeof(Status), Status.Available))
+                if (delivery.Status != Status.Available)
                     return Content((HttpStatusCode)422, "Статус доставки не Available");
                 delivery.UserId = userId;
-                delivery.Status = Enum.GetName(typeof(Status), Status.Taken);
+                delivery.Status = Status.Taken;
                 delivery.ModificationTime = DateTime.Now;
                 db.Update(delivery);
                 return Ok();

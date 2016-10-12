@@ -25,14 +25,14 @@ namespace HotDeliveryHttp.Tests.Controllers
         new Delivery {
             Id =1,
             CreationTime = dateTime,
-            Status = Enum.GetName(typeof(Status), Status.Expired),
+            Status = Status.Expired,
             Title = "1111111",
             ModificationTime = dateTime.AddMinutes(1),
             ExpirationTime = dateTime.AddSeconds(5) },
         new Delivery {
             Id =2,
             CreationTime = dateTime,
-            Status = Enum.GetName(typeof(Status), Status.Available),
+            Status = Status.Available,
             Title = "2222222",
             ModificationTime = dateTime,
             ExpirationTime = dateTime.AddSeconds(5)},
@@ -117,7 +117,7 @@ namespace HotDeliveryHttp.Tests.Controllers
             // Arrange
             var mockRepository = _CreateMockRepository();
             ValuesController controller = new ValuesController(mockRepository);
-            string expectedStatus = Enum.GetName(typeof(Status), Status.Taken);
+            string expectedStatus = Status.Taken;
             int id = 2;
 
             // Act
