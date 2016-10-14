@@ -4,34 +4,29 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using HotDeliveryDB;
-using HotDeliveryDB.Types;
+//using HotDeliveryDB;
+//using HotDeliveryDB.Types;
+using HotDeliveryModel;
 using System.Configuration;
+using HotDeliveryDTO;
 
 namespace HotDeliveryHttp.Controllers
 {
     public class ValuesController : ApiController
     {
-        private IRepository db;
+        private ViewModel _ViewModel;
 
         public ValuesController()
         {
-            AppSettings settings = new AppSettings();
+            string dBFormat = ConfigurationManager.AppSettings["DBFormat"];
+            string path = ConfigurationManager.ConnectionStrings[dBFormat].ConnectionString;
 
-            settings.ConnectionStrings.DBFormat = ConfigurationManager.AppSettings["DBFormat"];
-            settings.ConnectionStrings.Path = ConfigurationManager.ConnectionStrings[settings.ConnectionStrings.DBFormat].ConnectionString;
-
-            if (settings.ConnectionStrings.DBFormat == "XMLFile")
-                db = new XmlRepository(settings.ConnectionStrings.Path);
-            else if (settings.ConnectionStrings.DBFormat == "SQLite")
-            {
-                db = new SQLiteRepository(settings.ConnectionStrings.Path);
-            }
+            _ViewModel = new ViewModel(dBFormat, path);
         }
 
-        public ValuesController(IRepository repository)
+        public ValuesController(ViewModel viewModel)
         {
-            db = repository;
+            _ViewModel = viewModel;
         }
 
         // GET api/values
@@ -40,8 +35,7 @@ namespace HotDeliveryHttp.Controllers
         {
             try
             {
-                List<Delivery> deliveries = db.GetDeliveryList();
-                var subset = deliveries.Where(i => i.Status == Status.Available);
+                List<DeliveryDTO> subset = _ViewModel.GetAvailableDeliveries();
                 return Ok(subset);
             }
             catch (Exception)
@@ -57,16 +51,8 @@ namespace HotDeliveryHttp.Controllers
         {
             try
             {
-                Delivery delivery = db.GetDelivery(deliveryId);
-                if (delivery == null)
-                    return Content(HttpStatusCode.NotFound, "Доставка не найдена");
-                if (delivery.Status != Status.Available)
-                    return Content((HttpStatusCode)422, "Статус доставки не Available");
-                delivery.UserId = userId;
-                delivery.Status = Status.Taken;
-                delivery.ModificationTime = DateTime.Now;
-                db.Update(delivery);
-                return Ok();
+                ResponseDTO result = _ViewModel.TakeDelivery(deliveryId, userId);
+                return Content((HttpStatusCode)result.Type, result.Message);
             }
             catch (Exception)
             {

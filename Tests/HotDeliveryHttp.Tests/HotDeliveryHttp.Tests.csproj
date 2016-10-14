@@ -110,11 +110,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HotDeliveryDB\HotDeliveryDB.csproj">
-      <Project>{6c2a5c01-c60b-46ff-bdbc-8d22edba2c7f}</Project>
-      <Name>HotDeliveryDB</Name>
+    <ProjectReference Include="..\..\HotDeliveryDTO\HotDeliveryModel.csproj">
+      <Project>{7c8689fb-3f24-4a53-91b4-469248834bba}</Project>
+      <Name>HotDeliveryModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HotDeliveryHttp\HotDeliveryHttp.csproj">
+    <ProjectReference Include="..\..\HotDeliveryHttp\HotDeliveryHttp.csproj">
       <Project>{892FE704-1924-48CE-B4F1-992F9581ADCC}</Project>
       <Name>HotDeliveryHttp</Name>
     </ProjectReference>

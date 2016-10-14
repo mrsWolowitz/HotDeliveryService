@@ -258,12 +258,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HotDeliveryDB\HotDeliveryDB.csproj">
-      <Project>{6c2a5c01-c60b-46ff-bdbc-8d22edba2c7f}</Project>
-      <Name>HotDeliveryDB</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -272,6 +266,12 @@
     </Content>
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HotDeliveryDTO\HotDeliveryModel.csproj">
+      <Project>{7c8689fb-3f24-4a53-91b4-469248834bba}</Project>
+      <Name>HotDeliveryModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
