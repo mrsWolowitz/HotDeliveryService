@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using HotDeliveryDB.Types;
-using HotDeliveryDTO;
 
 namespace HotDeliveryModel
 {
-    public class ViewModel
+    public class ViewModel:IHotDeliveryViewModel
     {
         private IRepository _DataBase;
         public ViewModel(string dBFormat, string dBPath)

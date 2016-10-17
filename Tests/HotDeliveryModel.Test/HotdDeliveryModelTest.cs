@@ -5,7 +5,6 @@ using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HotDeliveryDB;
 using HotDeliveryDB.Types;
-using HotDeliveryDTO;
 using Moq;
 
 namespace HotDeliveryModel.Test

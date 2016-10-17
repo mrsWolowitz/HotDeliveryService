@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IHotDeliveryViewModel.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="DeliveryDTO.cs" />
     <Compile Include="ResponseDTO.cs" />

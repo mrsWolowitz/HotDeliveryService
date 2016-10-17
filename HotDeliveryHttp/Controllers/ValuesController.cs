@@ -4,17 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-//using HotDeliveryDB;
-//using HotDeliveryDB.Types;
 using HotDeliveryModel;
 using System.Configuration;
-using HotDeliveryDTO;
 
 namespace HotDeliveryHttp.Controllers
 {
     public class ValuesController : ApiController
     {
-        private ViewModel _ViewModel;
+        private IHotDeliveryViewModel _ViewModel;
 
         public ValuesController()
         {
@@ -24,7 +21,7 @@ namespace HotDeliveryHttp.Controllers
             _ViewModel = new ViewModel(dBFormat, path);
         }
 
-        public ValuesController(ViewModel viewModel)
+        public ValuesController(IHotDeliveryViewModel viewModel)
         {
             _ViewModel = viewModel;
         }
