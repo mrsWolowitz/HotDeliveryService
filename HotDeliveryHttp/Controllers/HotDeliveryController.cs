@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using HotDeliveryModel;
 using System.Configuration;
 
 namespace HotDeliveryHttp.Controllers
 {
-    public class ValuesController : ApiController
+    public class HotDeliveryController : ApiController
     {
         private IHotDeliveryViewModel _ViewModel;
 
-        public ValuesController()
+        public HotDeliveryController()
         {
             string dBFormat = ConfigurationManager.AppSettings["DBFormat"];
             string path = ConfigurationManager.ConnectionStrings[dBFormat].ConnectionString;
@@ -21,7 +19,7 @@ namespace HotDeliveryHttp.Controllers
             _ViewModel = new ViewModel(dBFormat, path);
         }
 
-        public ValuesController(IHotDeliveryViewModel viewModel)
+        public HotDeliveryController(IHotDeliveryViewModel viewModel)
         {
             _ViewModel = viewModel;
         }
@@ -49,7 +47,7 @@ namespace HotDeliveryHttp.Controllers
             try
             {
                 ResponseDTO result = _ViewModel.TakeDelivery(deliveryId, userId);
-                return Content((HttpStatusCode)result.Type, result.Message);
+                return Content((HttpStatusCode) result.Type, result.Message);
             }
             catch (Exception)
             {

@@ -16,7 +16,7 @@ using HotDeliveryModel;
 namespace HotDeliveryHttp.Tests.Controllers
 {
     [TestClass]
-    public class ValuesControllerTest
+    public class HotDeliveryControllerTest
     {
         [TestMethod]
         public void GetAvailableDeliveries_Ok()
@@ -27,7 +27,7 @@ namespace HotDeliveryHttp.Tests.Controllers
             mock.Setup(m => m.GetAvailableDeliveries()).Returns(deliveries);
             var viewModel = mock.Object;
 
-            var controller = new ValuesController(viewModel);
+            var controller = new HotDeliveryController(viewModel);
             int expectedCount = 1;
 
             // Act
@@ -48,7 +48,7 @@ namespace HotDeliveryHttp.Tests.Controllers
             mock.Setup(m => m.GetAvailableDeliveries()).Throws<Exception>();
             var viewModel = mock.Object;
 
-            var controller = new ValuesController(viewModel);
+            var controller = new HotDeliveryController(viewModel);
 
             // Act
             IHttpActionResult actionResult = controller.GetAvailableDeliveries();
@@ -68,7 +68,7 @@ namespace HotDeliveryHttp.Tests.Controllers
             mock.Setup(m => m.TakeDelivery(2, 55)).Returns(new ResponseDTO(ResponseType.Ok));
             var viewModel = mock.Object;
 
-            var controller = new ValuesController(viewModel);
+            var controller = new HotDeliveryController(viewModel);
 
             // Act
             IHttpActionResult actionResult = controller.TakeDelivery(2, 55);
@@ -87,7 +87,7 @@ namespace HotDeliveryHttp.Tests.Controllers
             mock.Setup(m => m.TakeDelivery(2, 55)).Returns(new ResponseDTO(ResponseType.NotFound, "Доставка не найдена"));
             var viewModel = mock.Object;
 
-            var controller = new ValuesController(viewModel);
+            var controller = new HotDeliveryController(viewModel);
 
             // Act
             IHttpActionResult actionResult = controller.TakeDelivery(2, 55);
@@ -107,7 +107,7 @@ namespace HotDeliveryHttp.Tests.Controllers
             mock.Setup(m => m.TakeDelivery(2, 55)).Returns(new ResponseDTO(ResponseType.NotAvailable, "Статус доставки не Available"));
             var viewModel = mock.Object;
 
-            var controller = new ValuesController(viewModel);
+            var controller = new HotDeliveryController(viewModel);
 
             // Act
             IHttpActionResult actionResult = controller.TakeDelivery(2, 55);
@@ -127,7 +127,7 @@ namespace HotDeliveryHttp.Tests.Controllers
             mock.Setup(m => m.TakeDelivery(2, 55)).Throws<Exception>();
             var viewModel = mock.Object;
 
-            var controller = new ValuesController(viewModel);
+            var controller = new HotDeliveryController(viewModel);
 
             // Act
             IHttpActionResult actionResult = controller.TakeDelivery(2, 55);
